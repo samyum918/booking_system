@@ -154,6 +154,7 @@ public class BookingService {
         }
 
         Booking booking = ProjectUtils.transformFrom(request, Booking.class);
+        booking.setUserId(userOpt.get().getId());
         booking.setWeekday(booking.getReservationDate().getDayOfWeek());
         booking.setReserveBy(ReservationRole.USER);
         return bookingRepository.save(booking);
