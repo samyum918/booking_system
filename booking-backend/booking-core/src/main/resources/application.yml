@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/booking?useSSL=false&serverTimezone=UTC&useUnicode=yes&characterEncoding=UTF-8
+    username: mysql_user
+    password: 123456
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console:
+      enabled: false
+
+server:
+  port: 8091
+
+jwt:
+  signing:
+    key:
+      secret: secret
+  token:
+    expiration:
+      in-ms: 18000000
