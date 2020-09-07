@@ -10,8 +10,10 @@ export default {
         }
     },
     isLoggedIn() {
-        let user = localStorage.getItem('user');
-        return typeof(user) !== "undefined" && user !== null;
+        if(localStorage.getItem('user')) {
+            return true;
+        }
+        return false;
     },
     getUsername() {
         let user = JSON.parse(localStorage.getItem('user'));
