@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/front/booking")
 public class BookingController {
     @Autowired
     ObjectMapper objectMapper;
