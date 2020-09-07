@@ -46,7 +46,7 @@ export default {
     reserve(reserveObj) {
         const {username, storeId, reservationDate, timeslot} = reserveObj;
         return new Promise ((resolve, reject) => {
-            axios.post("http://localhost:8091/booking/reserve", 
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/booking/reserve", 
             {
                 username, 
                 storeId, 

@@ -11,12 +11,11 @@ export default {
                 const user = resp.data;
                 localStorage.setItem('user', JSON.stringify(user));
                 EventBus.$emit('logged', 'User logged');
-                resolve(resp)
+                resolve(resp);
             })
             .catch(err => {
                 localStorage.removeItem('user');
-                console.log(err);
-                reject(err.response)
+                reject(err.response);
             })
         });
     },
