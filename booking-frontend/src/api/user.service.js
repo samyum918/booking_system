@@ -4,7 +4,7 @@ import EventBus from '../event-bus';
 export default {
     login(username, password) {
         return new Promise ((resolve, reject) => {
-            axios.post("http://localhost:8091/login", {
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/login", {
                 username,
                 password
             }).then(resp => {
@@ -26,7 +26,7 @@ export default {
     register(userObj) {
         const {username, password, firstName, lastName, gender, email, phone} = userObj;
         return new Promise ((resolve, reject) => {
-            axios.post("http://localhost:8091/user/register", {
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/user/register", {
                 username,
                 password,
                 firstName,

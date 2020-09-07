@@ -4,7 +4,7 @@ import axios from 'axios';
 export default {
     getAvailableStores() {
         return new Promise ((resolve, reject) => {
-            axios.get("http://localhost:8091/booking/available-stores",
+            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-stores",
             {
                 headers: auth.apiHeader()
             }).then(resp => {
@@ -17,7 +17,7 @@ export default {
     },
     getAvailableDates(store_id, year_month) {
         return new Promise ((resolve, reject) => {
-            axios.get("http://localhost:8091/booking/available-dates", 
+            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-dates", 
             {
                 params: {store_id, year_month},
                 headers: auth.apiHeader()
@@ -31,7 +31,7 @@ export default {
     },
     getAvailableTimeslots(store_id, date) {
         return new Promise ((resolve, reject) => {
-            axios.get("http://localhost:8091/booking/available-timeslots", 
+            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-timeslots", 
             {
                 params: {store_id, date},
                 headers: auth.apiHeader()
