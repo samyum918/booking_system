@@ -22,6 +22,9 @@ public class AdminPanelSecurityConfigurer extends BaseSecurityConfigurer {
             .and().sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling()
+            .accessDeniedHandler(restfulAccessDeniedHandler)
+            .authenticationEntryPoint(restAuthenticationEntryPoint);
     }
 
     @Override

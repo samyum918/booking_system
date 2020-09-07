@@ -37,34 +37,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractUsername(jwt);
+        if(SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                jwt = authorizationHeader.substring(7);
+
+                if (!jwtUtil.isTokenExpired(jwt)) {
+                    username = jwtUtil.extractUsername(jwt);
+
+                    if (username != null) {
+                        if (request.getRequestURI().startsWith("/cms/")) {
+                            userDetailsService = applicationContext.getBean("cmsUserService", UserDetailsService.class);
+                        } else {
+                            userDetailsService = applicationContext.getBean("userService", UserDetailsService.class);
+                        }
+
+                        UserDetails userDetails = null;
+                        Boolean userFound = true;
+                        try {
+                            userDetails = userDetailsService.loadUserByUsername(username);
+                        } catch (UsernameNotFoundException ex) {
+                            userFound = false;
+                        }
+
+                        if (userFound && jwtUtil.isUsernameMatch(jwt, userDetails)) {
+                            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                                    userDetails, null, userDetails.getAuthorities());
+                            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext().setAuthentication(authToken);
+                        }
+                    }
+                }
+            }
         }
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            if(request.getRequestURI().startsWith("/cms/")) {
-                userDetailsService = applicationContext.getBean("cmsUserService", UserDetailsService.class);
-            }
-            else {
-                userDetailsService = applicationContext.getBean("userService", UserDetailsService.class);
-            }
-
-            UserDetails userDetails = null;
-            Boolean userFound = true;
-            try {
-                userDetails = userDetailsService.loadUserByUsername(username);
-            } catch (UsernameNotFoundException ex) {
-                userFound = false;
-            }
-
-            if (userFound && jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
-        }
         chain.doFilter(request, response);
     }
 }

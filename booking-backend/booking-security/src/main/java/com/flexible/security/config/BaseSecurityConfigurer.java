@@ -1,5 +1,7 @@
 package com.flexible.security.config;
 
+import com.flexible.security.component.RestAuthenticationEntryPoint;
+import com.flexible.security.component.RestfulAccessDeniedHandler;
 import com.flexible.security.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BaseSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+    @Autowired
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
