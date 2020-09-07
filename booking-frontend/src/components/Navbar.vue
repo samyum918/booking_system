@@ -25,7 +25,7 @@
                     <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
                     </svg>
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="/booking">Book a service</a>
                     <a class="dropdown-item" href="#">Booking History</a>
                     <div class="dropdown-divider"></div>
