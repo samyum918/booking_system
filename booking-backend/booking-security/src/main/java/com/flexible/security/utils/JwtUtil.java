@@ -41,23 +41,23 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) throws ExpiredJwtException {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    private Claims extractAllClaims(String token) {
+        Claims claims = null;
+        try {
+            claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException ex) {
+            claims = ex.getClaims();
+        }
+        return claims;
     }
 
     public Boolean isTokenExpired(String token) {
-        Boolean expired = true;
-        try {
-            expired = extractExpiration(token).before(new Date());
-        } catch (Exception ex) {
-            expired = true;
-        }
-        return expired;
+        return extractExpiration(token).before(new Date());
     }
 
-    public Boolean isUsernameMatch(String token, UserDetails userDetails) {
-        String username = extractUsername(token);
-        return username.equals(userDetails.getUsername());
+    public Boolean isUsernameMatch(String token, String username) {
+        String tokenUsername = extractUsername(token);
+        return tokenUsername.equals(username);
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -80,6 +80,11 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
-        return (isUsernameMatch(token, userDetails) && !isTokenExpired(token));
+        return (isUsernameMatch(token, userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String refreshToken(String token) {
+        Claims claims = extractAllClaims(token);
+        return createToken(claims, claims.getSubject());
     }
 }

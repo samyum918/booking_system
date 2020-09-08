@@ -32,8 +32,6 @@
                     <div class="dropdown-item cursor-pointer" @click="logout()">Logout</div>
                 </div>
             </div>
-
-            <!-- <div class="btn btn-outline-primary" @click="logout()">Logout</div> -->
           </li>
         </ul>
       </div>
@@ -56,9 +54,11 @@ export default {
     methods: {
         logout() {
             userService.logout();
+            this.$router.push('/');
+        },
+        unsetNavBar() {
             this.isLogged = false;
             this.username = null;
-            this.$router.push('/');
         }
     },
     created() {
@@ -68,6 +68,9 @@ export default {
         EventBus.$on('logged', () => {
             this.isLogged = auth.isLoggedIn();
             this.username = auth.getUsername();
+        });
+        EventBus.$on('logout', () => {
+            this.unsetNavBar();
         });
     }
 }

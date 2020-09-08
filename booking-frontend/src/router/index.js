@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/', '/signup', '/login'];
   const authRequired = !publicPages.includes(to.path);
 
-  if (authRequired && !auth.isLoggedIn) {
+  if (authRequired && !auth.isLoggedIn()) {
     return next('/login');
   }
 

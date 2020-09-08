@@ -21,7 +21,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         ObjectMapper objMapper = new ObjectMapper();
         ObjectNode objectNode = objMapper.createObjectNode();
-        objectNode.put("error", "Token not found or expired.");
+        objectNode.put("error", "Token not found or expired. Please login.");
         response.getWriter().println(objectNode.toString());
         response.getWriter().flush();
     }

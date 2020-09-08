@@ -21,6 +21,7 @@ export default {
     },
     logout() {
         localStorage.removeItem('user');
+        EventBus.$emit('logout', 'User logout');
     },
     register(userObj) {
         const {username, password, firstName, lastName, gender, email, phone} = userObj;

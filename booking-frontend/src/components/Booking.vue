@@ -29,6 +29,7 @@
 </template>
 
 <script>
+    import helper from '../api/helper.js';
     import bookingService from '../api/booking.service.js';
     import Calendar from 'v-calendar/lib/components/calendar.umd';
 
@@ -108,10 +109,7 @@
             getAvailableStores() {
                 bookingService.getAvailableStores().then(resp => {
                     this.stores = resp.data;
-                }).catch(err => {
-                    alert("An unexpected error occured.");
-                    console.log(err);
-                });
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
             },
             getAvailableDates(store_id, year_month) {
                 this.disableAllDates();
@@ -157,18 +155,12 @@
                     this.availableDatesAttrs.push(highAvailability);
                     this.availableDatesAttrs.push(middleAvailability);
                     this.availableDatesAttrs.push(lowAvailability);
-                }).catch(err => {
-                    alert("An unexpected error occured.");
-                    console.log(err);
-                });
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
             },
             getAvailableTimeslots(store_id, date) {
                 bookingService.getAvailableTimeslots(store_id, date).then(resp => {
                     this.availableTimeslots = resp.data.availableTimeslots;
-                }).catch(err => {
-                    alert("An unexpected error occured.");
-                    console.log(err);
-                });
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
             },
             reserve() {
                 let user = JSON.parse(localStorage.getItem('user'));
@@ -183,10 +175,7 @@
                 bookingService.reserve({username, storeId, reservationDate, timeslot}).then(() => {
                     alert("Reserved successfully.");
                     this.$router.push('/thankyou');
-                }).catch(err => {
-                    alert("An unexpected error occured.");
-                    console.log(err);
-                });
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
             }
         },
         created() {
