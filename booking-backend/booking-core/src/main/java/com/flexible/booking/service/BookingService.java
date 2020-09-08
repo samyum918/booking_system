@@ -169,7 +169,6 @@ public class BookingService {
         Booking bookingRecord = bookingRecordOpt.get();
         CancelBooking cancelBooking = ProjectUtils.transformFrom(bookingRecord, CancelBooking.class);
         cancelBooking.setId(null);
-        cancelBooking.setReserveBy(ReservationRole.ADMIN);
         cancelBookingRepository.save(cancelBooking);
         bookingRepository.delete(bookingRecord);
     }
