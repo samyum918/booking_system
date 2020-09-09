@@ -48,7 +48,7 @@ export default {
     data() {
         return {
             isLogged: auth.isLoggedIn(),
-            username: null
+            username: auth.getUsername()
         }
     },
     methods: {
@@ -62,9 +62,6 @@ export default {
         }
     },
     created() {
-        if(auth.getUsername()) {
-            this.username = auth.getUsername();
-        }
         EventBus.$on('logged', () => {
             this.isLogged = auth.isLoggedIn();
             this.username = auth.getUsername();
