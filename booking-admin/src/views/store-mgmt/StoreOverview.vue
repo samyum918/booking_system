@@ -14,7 +14,7 @@
       </slot>
     </CCardHeader>
     <CCardBody>
-        <CDataTable :items="items" caption="Stores List" pagination></CDataTable>
+        <CDataTable caption="Stores List" :items="items" :loading="loading" pagination></CDataTable>
     </CCardBody>
   </CCard>
 </div>
@@ -27,11 +27,13 @@ export default {
     data() {
         return {
             items: [],
-            pagination: {activePage: 1, pages: 10, size: 'lg'}
+            pagination: {activePage: 1, pages: 10, size: 'lg'},
+            loading: false,
         }
     },
     methods: {
         getStores() {
+            this.$data.loading = true;
             const pagination = this.$data.pagination;
             const page = pagination.activePage;
             const limit = 10;
@@ -41,7 +43,7 @@ export default {
             storeService.getByPage(page, limit).then(result => {
                 this.$data.items = result.data.content;
                 pagination.pages = result.data.totalPages;
-                console.log(result);
+                this.$data.loading = false;
             }).catch(err => helper.apiErrorHandling(err));
         }
     },
