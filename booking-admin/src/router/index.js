@@ -6,7 +6,8 @@ import store from '../store'
 const TheContainer = () => import('@/containers/TheContainer')
 
 // Views
-const StoreCreation = () => import('@/views/store-setup/StoreCreation')
+const StoreCreation = () => import('@/views/store-mgmt/StoreCreation')
+const StoreOverview = () => import('@/views/store-mgmt/StoreOverview')
 
 // Views - Components
 const Forms = () => import('@/views/base/Forms')
@@ -48,6 +49,7 @@ function configRoutes () {
   return [
     {
       path: '/',
+      redirect: '/store/overview',
       name: 'Home',
       component: TheContainer,
       children: [
@@ -58,6 +60,11 @@ function configRoutes () {
             render (c) { return c('router-view') }
           },
           children: [
+            {
+              path: 'overview',
+              name: 'Overview',
+              component: StoreOverview
+            },
             {
               path: 'creation',
               name: 'Creation',

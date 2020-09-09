@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +24,16 @@ public class StoreController {
     @PostMapping("/create")
     public Store create(@Valid @RequestBody CreateStoreRequest request) {
         return storeService.create(request);
+    }
+
+    @GetMapping("/get")
+    public List<Store> getAll() {
+        return storeRepository.findAll();
+    }
+
+    @GetMapping("/get/{id:\\d+}")
+    public Store getOne(@PathVariable Integer id) {
+        return storeRepository.findById(id).orElseThrow(() -> new ApiResourceNotFoundException("Store does not exist."));
     }
 
     @PatchMapping("/inactivate/{id:\\d+}")
