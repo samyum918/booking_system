@@ -9,6 +9,8 @@ const TheContainer = () => import('@/containers/TheContainer')
 const StoreCreation = () => import('@/views/store-mgmt/StoreCreation')
 const StoreOverview = () => import('@/views/store-mgmt/StoreOverview')
 
+const StoreTimeslotOverview = () => import('@/views/store-mgmt/StoreTimeslotOverview')
+
 // Views - Components
 const Forms = () => import('@/views/base/Forms')
 const Tables = () => import('@/views/base/Tables')
@@ -55,6 +57,7 @@ function configRoutes () {
       children: [
         {
           path: 'store',
+          redirect: '/store/overview',
           name: 'Store',
           component: {
             render (c) { return c('router-view') }
@@ -69,6 +72,21 @@ function configRoutes () {
               path: 'creation',
               name: 'Creation',
               component: StoreCreation
+            }
+          ]
+        },
+        {
+          path: 'store-timeslot',
+          redirect: '/store-timeslot/overview',
+          name: 'Store Timeslot',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'overview',
+              name: 'Overview',
+              component: StoreTimeslotOverview
             }
           ]
         },

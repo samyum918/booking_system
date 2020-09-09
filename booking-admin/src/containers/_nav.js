@@ -8,9 +8,15 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'Store Creation',
-        to: '/store/creation',
+        name: 'Store Overview',
+        to: '/store/overview',
         icon: 'cil-institution'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Store Timeslot Overview',
+        to: '/store-timeslot/overview',
+        icon: 'cil-calendar'
       },
       {
         _name: 'CSidebarNavTitle',
