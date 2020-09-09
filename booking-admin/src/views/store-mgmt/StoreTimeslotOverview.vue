@@ -14,7 +14,7 @@
       </slot>
     </CCardHeader>
     <CCardBody>
-        <CDataTable caption="Store Timeslots List" :items="items" :fields="fields" :loading="loading" pagination></CDataTable>
+        <CDataTable caption="Store Timeslots List" :items="items" :fields="fields" :itemsPerPage="10" :loading="loading" pagination></CDataTable>
     </CCardBody>
   </CCard>
 </div>
@@ -28,7 +28,7 @@ export default {
         return {
             items: [],
             fields: ['id', 'storeId', 'weekday', 'startTime', 'endTime'],
-            pagination: {activePage: 1, pages: 10, size: 'lg'},
+            pagination: {activePage: 1, pages: 10},
             loading: false,
         }
     },
@@ -38,9 +38,7 @@ export default {
             const pagination = this.$data.pagination;
             const page = pagination.activePage;
             const limit = 10;
-            if(pagination.size == 'sm') {
-                limit = 5;
-            }
+
             storeTimeslotService.getByPage(page, limit).then(result => {
                 this.$data.items = result.data.content;
                 pagination.pages = result.data.totalPages;
