@@ -14,6 +14,9 @@ const StoreTimeslotOverview = () => import('@/views/store-mgmt/StoreTimeslotOver
 const BlockDate = () => import('@/views/block-booking/BlockDate')
 const BlockTimeslot = () => import('@/views/block-booking/BlockTimeslot')
 
+const BookingOverview = () => import('@/views/records/BookingOverview')
+const CancelBookingOverview = () => import('@/views/records/CancelBookingOverview')
+
 // Views - Components
 const Forms = () => import('@/views/base/Forms')
 const Tables = () => import('@/views/base/Tables')
@@ -111,6 +114,26 @@ function configRoutes () {
               name: 'Block Timeslot',
               component: BlockTimeslot
             }
+          ]
+        },
+        {
+          path: 'records',
+          redirect: '/records/booking',
+          name: 'Records',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'booking',
+              name: 'Booking Records',
+              component: BookingOverview
+            },
+            {
+              path: 'cancel-booking',
+              name: 'Cancel Booking Records',
+              component: CancelBookingOverview
+            },
           ]
         },
         {

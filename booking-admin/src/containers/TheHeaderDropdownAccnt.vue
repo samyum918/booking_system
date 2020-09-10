@@ -9,7 +9,7 @@
       <CHeaderNavLink>
         <div class="c-avatar">
           <img
-            src="img/avatars/7.jpg"
+            src="img/avatars/user.png"
             class="c-avatar-img "
           />
         </div>
@@ -26,17 +26,26 @@
       <CIcon name="cil-settings" /> Settings
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-lock-locked" /> Logout
+      <span @click="logout()">
+        <CIcon name="cil-lock-locked" /> Logout
+      </span>
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
+import adminUserService from '../api/admin-user.service.js';
+
 export default {
   name: 'TheHeaderDropdownAccnt',
   data () {
     return { 
-      itemsCount: 42
+    }
+  },
+  methods: {
+    logout() {
+      adminUserService.logout();
+      this.$router.push("/pages/login");
     }
   }
 }

@@ -1,6 +1,15 @@
+import adminUserService from '../api/admin-user.service.js';
+
 export default {
     apiErrorHandling(err) {
-        this.unexpectedErrorHandling(err);
+        if(err.status === 401) {
+            alert(err.data.error);
+            adminUserService.logout();
+            router.push('/pages/login');
+        }
+        else {
+            this.unexpectedErrorHandling(err);
+        }
     },
     unexpectedErrorHandling(err) {
         alert("An unexpected error occured.");

@@ -32,7 +32,23 @@ export default [
         _name: 'CSidebarNavItem',
         name: 'Block a timeslot',
         to: '/block-booking/timeslot',
-        icon: 'cil-calendar'
+        icon: 'cil-clock'
+      },
+      {
+        _name: 'CSidebarNavTitle',
+        _children: ['Records']
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Booking',
+        to: '/records/booking',
+        icon: 'cil-calendar-check'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Cancel Booking',
+        to: '/records/cancel-booking',
+        icon: 'cil-x-circle'
       },
       {
         _name: 'CSidebarNavTitle',
