@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,14 +31,8 @@ public class StoreController {
     }
 
     @GetMapping("/get")
-    public Page<Store> getAll(@RequestParam(defaultValue = "1", required = false) Integer page,
-                                             @RequestParam(defaultValue = "10", required = false) Integer limit) {
-        if(page < 1 || limit < 1) {
-            throw new ApiBadRequestException("Page and limit must be greater than or equal to 1");
-        }
-
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        return storeRepository.findAll(pageable);
+    public List<Store> getAll() {
+        return storeRepository.findAll();
     }
 
     @GetMapping("/get/{id:\\d+}")

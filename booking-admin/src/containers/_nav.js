@@ -20,6 +20,10 @@ export default [
       },
       {
         _name: 'CSidebarNavTitle',
+        _children: ['Block Booking']
+      },
+      {
+        _name: 'CSidebarNavTitle',
         _children: ['Components']
       },
       {

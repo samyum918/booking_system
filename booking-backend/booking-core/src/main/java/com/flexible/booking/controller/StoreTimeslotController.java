@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cms/store-timeslot")
@@ -40,14 +41,8 @@ public class StoreTimeslotController {
     }
 
     @GetMapping("/get")
-    public Page<StoreTimeslot> getAll(@RequestParam(defaultValue = "1", required = false) Integer page,
-                                      @RequestParam(defaultValue = "10", required = false) Integer limit) {
-        if(page < 1 || limit < 1) {
-            throw new ApiBadRequestException("Page and limit must be greater than or equal to 1");
-        }
-
-        Pageable pageable = PageRequest.of(page - 1, limit);
-        return storeTimeslotRepository.findAll(pageable);
+    public List<StoreTimeslot> getAll() {
+        return storeTimeslotRepository.findAll();
     }
 
     @GetMapping("/get/{id:\\d+}")
