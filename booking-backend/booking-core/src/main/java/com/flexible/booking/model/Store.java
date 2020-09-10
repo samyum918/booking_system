@@ -2,17 +2,18 @@ package com.flexible.booking.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@Where(clause = SoftDeleteBaseModel.SOFT_DELETED_CLAUSE)
 @Table(name = "store")
-public class Store extends BaseModel {
+public class Store extends SoftDeleteBaseModel {
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -48,7 +49,4 @@ public class Store extends BaseModel {
 
     @Column(name = "open_at_sat")
     private Boolean openAtSat;
-
-    @Column(name = "delete_date")
-    private LocalDateTime deleteDate;
 }

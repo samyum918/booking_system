@@ -11,6 +11,9 @@ const StoreOverview = () => import('@/views/store-mgmt/StoreOverview')
 
 const StoreTimeslotOverview = () => import('@/views/store-mgmt/StoreTimeslotOverview')
 
+const BlockDate = () => import('@/views/block-booking/BlockDate')
+const BlockTimeslot = () => import('@/views/block-booking/BlockTimeslot')
+
 // Views - Components
 const Forms = () => import('@/views/base/Forms')
 const Tables = () => import('@/views/base/Tables')
@@ -65,12 +68,12 @@ function configRoutes () {
           children: [
             {
               path: 'overview',
-              name: 'Overview',
+              name: 'Store Overview',
               component: StoreOverview
             },
             {
               path: 'creation',
-              name: 'Creation',
+              name: 'Store Creation',
               component: StoreCreation
             }
           ]
@@ -85,8 +88,28 @@ function configRoutes () {
           children: [
             {
               path: 'overview',
-              name: 'Overview',
+              name: 'Store Timeslot Overview',
               component: StoreTimeslotOverview
+            }
+          ]
+        },
+        {
+          path: 'block-booking',
+          redirect: '/block-booking/timeslot',
+          name: 'Block Booking',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'date',
+              name: 'Block Date',
+              component: BlockDate
+            },
+            {
+              path: 'timeslot',
+              name: 'Block Timeslot',
+              component: BlockTimeslot
             }
           ]
         },

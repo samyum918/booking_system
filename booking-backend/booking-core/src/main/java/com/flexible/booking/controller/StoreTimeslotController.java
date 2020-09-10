@@ -3,16 +3,12 @@ package com.flexible.booking.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.flexible.booking.dto.request.CreateStoreTimeslotRequest;
-import com.flexible.booking.exception.ApiBadRequestException;
 import com.flexible.booking.exception.ApiForbiddenException;
 import com.flexible.booking.exception.ApiResourceNotFoundException;
 import com.flexible.booking.model.StoreTimeslot;
 import com.flexible.booking.repository.StoreTimeslotRepository;
 import com.flexible.booking.utils.ProjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

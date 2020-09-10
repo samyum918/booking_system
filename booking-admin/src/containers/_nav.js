@@ -23,6 +23,18 @@ export default [
         _children: ['Block Booking']
       },
       {
+        _name: 'CSidebarNavItem',
+        name: 'Block a date',
+        to: '/block-booking/date',
+        icon: 'cil-calendar'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Block a timeslot',
+        to: '/block-booking/timeslot',
+        icon: 'cil-calendar'
+      },
+      {
         _name: 'CSidebarNavTitle',
         _children: ['Components']
       },

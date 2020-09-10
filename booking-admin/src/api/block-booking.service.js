@@ -2,9 +2,10 @@ import auth from './auth';
 import axios from 'axios';
 
 export default {
-    getAll() {
+    date(dateObj) {
         return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/store-timeslot/get",
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/block-booking/date",
+            dateObj,
             {
                 headers: auth.apiHeader()
             }).then(resp => {
@@ -15,9 +16,10 @@ export default {
             });
         });
     },
-    delete(id) {
+    timeslot(timeslotObj) {
         return new Promise ((resolve, reject) => {
-            axios.delete(process.env.VUE_APP_API_ENDPOINT + "/store-timeslot/delete/" + id,
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/block-booking/timeslot",
+            timeslotObj,
             {
                 headers: auth.apiHeader()
             }).then(resp => {
@@ -27,5 +29,5 @@ export default {
                 reject(err.response);
             });
         });
-    }
+    },
 }

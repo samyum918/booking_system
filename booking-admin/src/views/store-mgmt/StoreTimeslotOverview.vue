@@ -3,10 +3,10 @@
   <CCard>
     <CCardHeader>
       <slot name="header">
-        <CIcon name="cil-grid"/> Store Timeslots List
+        <CIcon name="cil-grid"/> Store Timeslots Table
         <div class="card-header-actions">
             <a href="/#/store/creation">
-                <CButton type="button" size="sm" color="danger">
+                <CButton type="button" size="sm" color="success">
                     <CIcon name="cil-plus"/> Add new
                 </CButton>
             </a>
@@ -25,8 +25,8 @@
         >
             <template #actions="{item}">
                 <td class="py-2">
-                    <CButton color="info" size="sm" class="mr-1" @click="edit(item.id)">Edit</CButton>
-                    <CButton color="danger" size="sm">Delete</CButton>
+                    <CButton color="info" size="sm" class="mr-1" @click="editItem(item.id)">Edit</CButton>
+                    <CButton color="danger" size="sm" @click="deleteItem(item)">Delete</CButton>
                 </td>
             </template>
         </CDataTable>
@@ -57,8 +57,19 @@ export default {
                 this.$data.loading = false;
             }).catch(err => helper.apiErrorHandling(err));
         },
-        edit(id) {
+        editItem(id) {
             console.log(id);
+        },
+        deleteItem(item) {
+            let itemIndex = this.$data.items.indexOf(item);
+            this.$data.items.splice(itemIndex, 1);
+
+            storeTimeslotService.delete(item.id).then(result => {
+                alert("Deleted with success.");
+            }).catch(err => {
+                this.$data.items.splice(itemIndex, 0, item);
+                helper.apiErrorHandling(err); 
+            });
         }
     },
     created() {

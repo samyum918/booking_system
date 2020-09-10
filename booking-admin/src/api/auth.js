@@ -1,13 +1,13 @@
 export default {
     apiHeader() {
-        // return authorization header with jwt token
-        let adminUser = JSON.parse(localStorage.getItem('admin-user'));
+        let header = {};
 
+        let adminUser = JSON.parse(localStorage.getItem('admin-user'));
         if (adminUser && adminUser.jwt) {
-            return { 'Authorization': 'Bearer ' + adminUser.jwt };
-        } else {
-            return {};
+            header["Authorization"] = 'Bearer ' + adminUser.jwt;
         }
+
+        return header;
     },
     isLoggedIn() {
         if(localStorage.getItem('admin-user')) {

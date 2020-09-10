@@ -69,7 +69,7 @@ export default {
         submitForm() {
           storeService.create(this.$data).then(() => {
             alert("Store created successfully.");
-            // this.$router.push('/');
+            this.$router.push('/');
           }).catch(err => helper.apiErrorHandling(err));
         }
     }

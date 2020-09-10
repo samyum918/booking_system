@@ -121,7 +121,7 @@ public class BookingService {
         LocalDate targetDate = LocalDate.parse(date);
         DayOfWeek targetWeekDay = targetDate.getDayOfWeek();
 
-        List<StoreTimeslot> totalTimeslotsObj = storeTimeslotRepository.findByWeekday(targetWeekDay);
+        List<StoreTimeslot> totalTimeslotsObj = storeTimeslotRepository.findByStoreIdAndWeekday(storeId, targetWeekDay);
         List<String> availableTimeslots = totalTimeslotsObj.stream().map(t -> t.getStartTime()).collect(Collectors.toList());
 
         if(!CollectionUtils.isEmpty(availableTimeslots)) {
