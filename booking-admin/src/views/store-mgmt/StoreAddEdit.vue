@@ -4,7 +4,7 @@
       <CCol md="9">
         <CCard>
           <CCardHeader>
-            <strong>Store Creation Form</strong>
+            <strong>Store Management Form</strong>
           </CCardHeader>
           <CCardBody>
             <CForm>
