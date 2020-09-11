@@ -42,7 +42,7 @@ export default {
             recordsService.cancelBooking().then(result => {
                 this.$data.items = result.data;
                 this.$data.loading = false;
-            }).catch(err => helper.apiErrorHandling(err));
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         cancelItem(id) {
 

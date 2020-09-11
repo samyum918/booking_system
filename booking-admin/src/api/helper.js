@@ -1,7 +1,7 @@
 import adminUserService from '../api/admin-user.service.js';
 
 export default {
-    apiErrorHandling(err) {
+    apiErrorHandling(err, router) {
         if(err.status === 401) {
             alert(err.data.error);
             adminUserService.logout();

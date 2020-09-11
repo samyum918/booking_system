@@ -49,7 +49,7 @@ export default {
                 this.$data.items = result.data;
                 this.$data.options = this.$data.items.map(item => {return {'label': item.name, 'value': item.id}});
                 this.$data.options.splice(0, 0, {'label': '---', 'value': ''});
-            }).catch(err => helper.apiErrorHandling(err));
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         submitForm() {
             const timeslotObj = {
@@ -59,7 +59,7 @@ export default {
             }
             blockBookingService.timeslot(timeslotObj).then(result => {
                 alert("Blocked a timeslot.");
-            }).catch(err => helper.apiErrorHandling(err));
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
         }
     },
     created() {

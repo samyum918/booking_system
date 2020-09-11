@@ -70,7 +70,7 @@ export default {
           storeService.create(this.$data).then(() => {
             alert("Store created successfully.");
             this.$router.push('/');
-          }).catch(err => helper.apiErrorHandling(err));
+          }).catch(err => helper.apiErrorHandling(err, this.$router));
         }
     }
 }

@@ -55,7 +55,7 @@ export default {
             storeService.getAll().then(result => {
                 this.$data.items = result.data;
                 this.$data.loading = false;
-            }).catch(err => helper.apiErrorHandling(err));
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         edit(id) {
             console.log(id);

@@ -55,7 +55,7 @@ export default {
             storeTimeslotService.getAll().then(result => {
                 this.$data.items = result.data;
                 this.$data.loading = false;
-            }).catch(err => helper.apiErrorHandling(err));
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         editItem(id) {
             console.log(id);
@@ -68,7 +68,7 @@ export default {
                 alert("Deleted with success.");
             }).catch(err => {
                 this.$data.items.splice(itemIndex, 0, item);
-                helper.apiErrorHandling(err); 
+                helper.apiErrorHandling(err, this.$router); 
             });
         }
     },
