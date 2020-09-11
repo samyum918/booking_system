@@ -50,30 +50,30 @@ export default [
         to: '/records/cancel-booking',
         icon: 'cil-x-circle'
       },
-      {
-        _name: 'CSidebarNavTitle',
-        _children: ['Components']
-      },
-      {
-        _name: 'CSidebarNavDropdown',
-        name: 'Base',
-        route: '/base',
-        icon: 'cil-puzzle',
-        items: [
-          {
-            name: 'Breadcrumbs',
-            to: '/base/breadcrumbs'
-          },
-          {
-            name: 'Forms',
-            to: '/base/forms'
-          },
-          {
-            name: 'Tables',
-            to: '/base/tables'
-          }
-        ]
-      }
+      // {
+      //   _name: 'CSidebarNavTitle',
+      //   _children: ['Components']
+      // },
+      // {
+      //   _name: 'CSidebarNavDropdown',
+      //   name: 'Base',
+      //   route: '/base',
+      //   icon: 'cil-puzzle',
+      //   items: [
+      //     {
+      //       name: 'Breadcrumbs',
+      //       to: '/base/breadcrumbs'
+      //     },
+      //     {
+      //       name: 'Forms',
+      //       to: '/base/forms'
+      //     },
+      //     {
+      //       name: 'Tables',
+      //       to: '/base/tables'
+      //     }
+      //   ]
+      // }
     ]
   }
 ]

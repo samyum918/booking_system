@@ -6,10 +6,11 @@ import store from '../store'
 const TheContainer = () => import('@/containers/TheContainer')
 
 // Views
-const StoreCreation = () => import('@/views/store-mgmt/StoreCreation')
 const StoreOverview = () => import('@/views/store-mgmt/StoreOverview')
+const StoreAddEdit = () => import('@/views/store-mgmt/StoreAddEdit')
 
 const StoreTimeslotOverview = () => import('@/views/store-mgmt/StoreTimeslotOverview')
+const StoreTimeslotAddEdit = () => import('@/views/store-mgmt/StoreTimeslotAddEdit')
 
 const BlockDate = () => import('@/views/block-booking/BlockDate')
 const BlockTimeslot = () => import('@/views/block-booking/BlockTimeslot')
@@ -75,9 +76,9 @@ function configRoutes () {
               component: StoreOverview
             },
             {
-              path: 'creation',
-              name: 'Store Creation',
-              component: StoreCreation
+              path: 'add-edit',
+              name: 'Store Add/Edit',
+              component: StoreAddEdit
             }
           ]
         },
@@ -93,6 +94,11 @@ function configRoutes () {
               path: 'overview',
               name: 'Store Timeslot Overview',
               component: StoreTimeslotOverview
+            },
+            {
+              path: 'add-edit',
+              name: 'Store Timeslot Add/Edit',
+              component: StoreTimeslotAddEdit
             }
           ]
         },

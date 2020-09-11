@@ -5,7 +5,7 @@
       <slot name="header">
         <CIcon name="cil-grid"/> Stores Table
         <div class="card-header-actions">
-            <a href="/#/store/creation">
+            <a href="/#/store/add-edit">
                 <CButton type="button" size="sm" color="success">
                     <CIcon name="cil-plus"/> Add new
                 </CButton>
