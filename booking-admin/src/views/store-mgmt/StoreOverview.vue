@@ -24,8 +24,8 @@
         >
             <template #actions="{item}">
                 <td class="py-2">
-                    <CButton color="info" size="sm" class="mr-1" @click="edit(item.id)">Edit</CButton>
-                    <CButton color="danger" size="sm">Delete</CButton>
+                    <CButton color="info" size="sm" class="mr-1" @click="editItem(item.id)">Edit</CButton>
+                    <CButton color="danger" size="sm" @click="deleteItem(item)">Delete</CButton>
                 </td>
             </template>
         </CDataTable>
@@ -57,8 +57,21 @@ export default {
                 this.$data.loading = false;
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
-        edit(id) {
-            console.log(id);
+        editItem(id) {
+            this.$router.push("/store/add-edit?id=" + id);
+        },
+        deleteItem(item) {
+            if(confirm("Are you sure to delete the record?")) {
+                let itemIndex = this.$data.items.indexOf(item);
+                this.$data.items.splice(itemIndex, 1);
+
+                storeService.delete(item.id).then(result => {
+                    alert("Deleted with success.");
+                }).catch(err => {
+                    this.$data.items.splice(itemIndex, 0, item);
+                    helper.apiErrorHandling(err, this.$router); 
+                });
+            }
         }
     },
     created() {

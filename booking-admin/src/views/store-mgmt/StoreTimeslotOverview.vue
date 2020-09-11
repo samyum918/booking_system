@@ -58,18 +58,20 @@ export default {
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         editItem(id) {
-            console.log(id);
+            this.$router.push("/store-timeslot/add-edit?id=" + id);
         },
         deleteItem(item) {
-            let itemIndex = this.$data.items.indexOf(item);
-            this.$data.items.splice(itemIndex, 1);
+            if(confirm("Are you sure to delete the record?")) {
+                let itemIndex = this.$data.items.indexOf(item);
+                this.$data.items.splice(itemIndex, 1);
 
-            storeTimeslotService.delete(item.id).then(result => {
-                alert("Deleted with success.");
-            }).catch(err => {
-                this.$data.items.splice(itemIndex, 0, item);
-                helper.apiErrorHandling(err, this.$router); 
-            });
+                storeTimeslotService.delete(item.id).then(result => {
+                    alert("Deleted with success.");
+                }).catch(err => {
+                    this.$data.items.splice(itemIndex, 0, item);
+                    helper.apiErrorHandling(err, this.$router); 
+                });
+            }
         }
     },
     created() {

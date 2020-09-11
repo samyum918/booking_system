@@ -28,5 +28,18 @@ export default {
                 reject(err.response);
             });
         });
+    },
+    delete(id) {
+        return new Promise ((resolve, reject) => {
+            axios.delete(process.env.VUE_APP_API_ENDPOINT + "/store/delete/" + id,
+            {
+                headers: auth.apiHeader()
+            }).then(resp => {
+                resolve(resp);
+            })
+            .catch(err => {
+                reject(err.response);
+            });
+        });
     }
 }
