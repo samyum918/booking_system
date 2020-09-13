@@ -1,10 +1,8 @@
 package com.flexible.booking.service;
 
-import com.flexible.booking.dto.request.RegisterUserRequest;
 import com.flexible.booking.exception.ApiForbiddenException;
 import com.flexible.booking.model.User;
 import com.flexible.booking.repository.UserRepository;
-import com.flexible.booking.utils.ProjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,14 +20,13 @@ public class UserService implements UserDetailsService {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    public User register(RegisterUserRequest request) {
-        Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
+    public User register(User user) {
+        Optional<User> userOpt = userRepository.findByUsername(user.getUsername());
         if(userOpt.isPresent()) {
             throw new ApiForbiddenException("Username already exists.");
         }
 
-        User user = ProjectUtils.transformFrom(request, User.class);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

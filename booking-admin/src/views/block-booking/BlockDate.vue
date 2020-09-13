@@ -44,18 +44,19 @@ export default {
     methods: {
         getStores() {
             storeService.getAll().then(result => {
-                this.$data.items = result.data;
-                this.$data.options = this.$data.items.map(item => {return {'label': item.name, 'value': item.id}});
-                this.$data.options.splice(0, 0, {'label': '---', 'value': ''});
+                this.items = result.data;
+                this.options = this.items.map(item => {return {'label': item.name, 'value': item.id}});
+                this.options.splice(0, 0, {'label': '---', 'value': ''});
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         submitForm() {
             const dateObj = {
-                storeId: this.$data.storeId,
-                date: this.$data.date,
+                storeId: this.storeId,
+                date: this.date,
             }
             blockBookingService.date(dateObj).then(result => {
                 alert("Blocked a date.");
+                this.$router.push("/records/date-blocking");
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         }
     },

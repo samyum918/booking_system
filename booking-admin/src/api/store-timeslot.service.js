@@ -1,45 +1,19 @@
-import auth from './auth';
-import axios from 'axios';
+import dataService from './data.service';
 
 export default {
     getAll() {
-        return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/store-timeslot/get",
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.getAll("/store-timeslot/get");
+    },
+    get(id) {
+        return dataService.getOne("/store-timeslot/get", id);
     },
     create(storeTimeslotObj) {
-        return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/store-timeslot/create",
-            storeTimeslotObj,
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.post("/store-timeslot/create", storeTimeslotObj);
+    },
+    update(storeTimeslotObj) {
+        return dataService.post("/store-timeslot/update", storeTimeslotObj);
     },
     delete(id) {
-        return new Promise ((resolve, reject) => {
-            axios.delete(process.env.VUE_APP_API_ENDPOINT + "/store-timeslot/delete/" + id,
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.delete("/store-timeslot/delete", id);
     }
 }

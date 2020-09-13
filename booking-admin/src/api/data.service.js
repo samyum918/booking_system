@@ -2,9 +2,9 @@ import auth from './auth';
 import axios from 'axios';
 
 export default {
-    getAvailableStores() {
+    getAll(uri) {
         return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-stores",
+            axios.get(process.env.VUE_APP_API_ENDPOINT + uri,
             {
                 headers: auth.apiHeader()
             }).then(resp => {
@@ -15,11 +15,10 @@ export default {
             });
         });
     },
-    getAvailableDates(store_id, year_month) {
+    getOne(uri, id) {
         return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-dates", 
+            axios.get(process.env.VUE_APP_API_ENDPOINT + uri + "/" + id,
             {
-                params: {store_id, year_month},
                 headers: auth.apiHeader()
             }).then(resp => {
                 resolve(resp);
@@ -29,11 +28,11 @@ export default {
             });
         });
     },
-    getAvailableTimeslots(store_id, date) {
+    post(uri, dataObj) {
         return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/booking/available-timeslots", 
+            axios.post(process.env.VUE_APP_API_ENDPOINT + uri,
+            dataObj,
             {
-                params: {store_id, date},
                 headers: auth.apiHeader()
             }).then(resp => {
                 resolve(resp);
@@ -43,10 +42,9 @@ export default {
             });
         });
     },
-    reserve(reserveObj) {
+    delete(uri, id) {
         return new Promise ((resolve, reject) => {
-            axios.post(process.env.VUE_APP_API_ENDPOINT + "/booking/reserve", 
-            reserveObj,
+            axios.delete(process.env.VUE_APP_API_ENDPOINT + uri + "/" + id,
             {
                 headers: auth.apiHeader()
             }).then(resp => {

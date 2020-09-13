@@ -3,12 +3,12 @@
   <CCard>
     <CCardHeader>
       <slot name="header">
-        <CIcon name="cil-grid"/> Cancel Booking Records Table
+        <CIcon name="cil-grid"/> User Records Table
       </slot>
     </CCardHeader>
     <CCardBody>
         <CDataTable 
-        caption="Cancel Booking Records List" 
+        caption="User Records List" 
         :items="items" 
         :fields="fields" 
         items-per-page-select
@@ -29,24 +29,26 @@ export default {
     data() {
         return {
             items: [],
-            fields: ['id', 'storeName', 'firstName', 'lastName', 'username', 'reservationDate', 'timeslot',
-                    {key: 'actions', label: '', _style: 'width:8%', sorter: false, filter: false}],
+            fields: ['id', 'firstName', 'lastName', 'username', 'phone', 'gender', 'email'],
             loading: false,
             pagination: {dots: false},
         }
     },
     methods: {
-        getCancelBookingRecords() {
+        getUserRecords() {
             this.loading = true;
 
-            recordsService.cancelBooking().then(result => {
+            recordsService.user().then(result => {
                 this.items = result.data;
                 this.loading = false;
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
+        cancelItem(id) {
+
+        },
     },
     created() {
-        this.getCancelBookingRecords();
+        this.getUserRecords();
     }
 }
 </script>

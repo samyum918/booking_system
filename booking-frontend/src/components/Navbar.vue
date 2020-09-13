@@ -28,6 +28,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="/booking">Book a service</a>
                     <a class="dropdown-item" href="#">Booking History</a>
+                    <a class="dropdown-item" href="#">Settings</a>
                     <div class="dropdown-divider"></div>
                     <div class="dropdown-item cursor-pointer" @click="logout()">Logout</div>
                 </div>

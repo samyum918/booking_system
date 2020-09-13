@@ -42,7 +42,7 @@ export default {
     data() {
         return {
             items: [],
-            fields: ['id', 'storeId', 'weekday', 'startTime', 'endTime', 
+            fields: ['id', 'storeName', 'weekday', 'startTime', 'endTime', 
                     {key: 'actions', label: '', _style: 'width:8%', sorter: false, filter: false}],
             loading: false,
             pagination: {dots: false},

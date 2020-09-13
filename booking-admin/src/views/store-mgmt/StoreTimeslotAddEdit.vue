@@ -4,7 +4,7 @@
       <CCol md="9">
         <CCard>
           <CCardHeader>
-            <strong>Store Timeslot Form</strong>
+            <strong>{{editMode ? 'Update' : 'Add'}} a store timeslot</strong>
           </CCardHeader>
           <CCardBody>
             <CForm>
@@ -26,7 +26,7 @@
           </CCardBody>
           <CCardFooter>
             <CButton type="submit" size="sm" color="primary" @click="submitForm()">
-                <CIcon name="cil-check-circle"/> Submit
+                <CIcon name="cil-check-circle"/> {{editMode ? 'Update' : 'Submit'}}
             </CButton>
           </CCardFooter>
         </CCard>
@@ -45,34 +45,63 @@ export default {
             items: [],
             storeOptions: [{'label': '---', 'value': ''}],
             weekdayOptions: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+            id: null,
             storeId: null,
             weekday: null,
             startTime: null,
             endTime: null,
+            editMode: false,
         }
     },
     methods: {
         getStores() {
             storeService.getAll().then(result => {
-                this.$data.items = result.data;
-                this.$data.storeOptions = this.$data.items.map(item => {return {'label': item.name, 'value': item.id}});
-                this.$data.storeOptions.splice(0, 0, {'label': '---', 'value': ''});
+                this.items = result.data;
+                this.storeOptions = this.items.map(item => {return {'label': item.name, 'value': item.id}});
+                this.storeOptions.splice(0, 0, {'label': '---', 'value': ''});
+            }).catch(err => helper.apiErrorHandling(err, this.$router));
+        },
+        getStoreTimeslotById(id) {
+            storeTimeslotService.get(id).then(result => {
+                this.storeId = result.data.storeId;
+                this.weekday = result.data.weekday;
+                this.startTime = result.data.startTime;
+                this.endTime = result.data.endTime;
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         submitForm() {
             const storeTimeslotObj = {
-                storeId: this.$data.storeId,
-                weekday: this.$data.weekday,
-                startTime: this.$data.startTime,
-                endTime: this.$data.endTime,
+                id: this.id,
+                storeId: this.storeId,
+                weekday: this.weekday,
+                startTime: this.startTime,
+                endTime: this.endTime,
             }
-            storeTimeslotService.create(storeTimeslotObj).then(result => {
-                alert("Created a timeslot.");
-            }).catch(err => helper.apiErrorHandling(err, this.$router));
+            if(this.editMode) {
+                storeTimeslotService.update(storeTimeslotObj).then(result => {
+                    alert("Updated a timeslot.");
+                    this.$router.push("/store-timeslot/overview");
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
+            }
+            else {
+                storeTimeslotService.create(storeTimeslotObj).then(result => {
+                    alert("Created a timeslot.");
+                    this.$router.push("/store-timeslot/overview");
+                }).catch(err => helper.apiErrorHandling(err, this.$router));
+            }
         }
     },
     created() {
         this.getStores();
+        if (this.$route.query.id) {
+            this.editMode = true;
+            this.id = this.$route.query.id;
+            this.getStoreTimeslotById(this.$route.query.id);
+        }
+        else {
+            this.editMode = false;
+            this.id = null;
+        }
     }
 }
 </script>

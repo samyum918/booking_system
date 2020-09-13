@@ -17,22 +17,15 @@ const BlockTimeslot = () => import('@/views/block-booking/BlockTimeslot')
 
 const BookingOverview = () => import('@/views/records/BookingOverview')
 const CancelBookingOverview = () => import('@/views/records/CancelBookingOverview')
-
-// Views - Components
-const Forms = () => import('@/views/base/Forms')
-const Tables = () => import('@/views/base/Tables')
-const Breadcrumbs = () => import('@/views/base/Breadcrumbs')
-const Paginations = () => import('@/views/base/Paginations')
+const UserOverview = () => import('@/views/records/UserOverview')
+const DateBlockingOverview = () => import('@/views/records/DateBlockingOverview')
+const TimeslotBlockingOverview = () => import('@/views/records/TimeslotBlockingOverview')
 
 // Views - Pages
 const Page404 = () => import('@/views/pages/Page404')
 const Page500 = () => import('@/views/pages/Page500')
 const Login = () => import('@/views/pages/Login')
 const Register = () => import('@/views/pages/Register')
-
-// Users
-const Users = () => import('@/views/users/Users')
-const User = () => import('@/views/users/User')
 
 Vue.use(Router)
 
@@ -140,62 +133,21 @@ function configRoutes () {
               name: 'Cancel Booking Records',
               component: CancelBookingOverview
             },
-          ]
-        },
-        {
-          path: 'users',
-          meta: {
-            label: 'Users'
-          },
-          component: {
-            render(c) {
-              return c('router-view')
-            }
-          },
-          children: [
             {
-              path: '',
-              name: 'Users',
-              component: Users
+              path: 'user',
+              name: 'User Records',
+              component: UserOverview
             },
             {
-              path: ':id',
-              meta: {
-                label: 'User Details'
-              },
-              name: 'User',
-              component: User
-            }
-          ]
-        },
-        {
-          path: 'base',
-          redirect: '/base/forms',
-          name: 'Base',
-          component: {
-            render (c) { return c('router-view') }
-          },
-          children: [
-            {
-              path: 'forms',
-              name: 'Forms',
-              component: Forms
+              path: 'date-blocking',
+              name: 'Date Blocking Records',
+              component: DateBlockingOverview
             },
             {
-              path: 'tables',
-              name: 'Tables',
-              component: Tables
+              path: 'timeslot-blocking',
+              name: 'Timeslot Blocking Records',
+              component: TimeslotBlockingOverview
             },
-            {
-              path: 'breadcrumbs',
-              name: 'Breadcrumbs',
-              component: Breadcrumbs
-            },
-            {
-              path: 'paginations',
-              name: 'Paginations',
-              component: Paginations
-            }
           ]
         }
       ]

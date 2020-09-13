@@ -34,7 +34,7 @@ export default {
     data() {
         return {
             items: [],
-            fields: ['id', 'storeId', 'reservationDate', 'timeslot',
+            fields: ['id', 'storeName', 'firstName', 'lastName', 'username', 'reservationDate', 'timeslot',
                     {key: 'actions', label: '', _style: 'width:8%', sorter: false, filter: false}],
             loading: false,
             pagination: {dots: false},

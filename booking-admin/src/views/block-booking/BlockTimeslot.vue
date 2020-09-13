@@ -46,19 +46,20 @@ export default {
     methods: {
         getStores() {
             storeService.getAll().then(result => {
-                this.$data.items = result.data;
-                this.$data.options = this.$data.items.map(item => {return {'label': item.name, 'value': item.id}});
-                this.$data.options.splice(0, 0, {'label': '---', 'value': ''});
+                this.items = result.data;
+                this.options = this.items.map(item => {return {'label': item.name, 'value': item.id}});
+                this.options.splice(0, 0, {'label': '---', 'value': ''});
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },
         submitForm() {
             const timeslotObj = {
-                storeId: this.$data.storeId,
-                date: this.$data.date,
-                timeslot: this.$data.timeslot,
+                storeId: this.storeId,
+                date: this.date,
+                timeslot: this.timeslot,
             }
             blockBookingService.timeslot(timeslotObj).then(result => {
                 alert("Blocked a timeslot.");
+                this.$router.push("/records/timeslot-blocking");
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         }
     },

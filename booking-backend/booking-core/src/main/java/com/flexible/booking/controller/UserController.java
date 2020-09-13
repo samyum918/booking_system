@@ -1,6 +1,5 @@
 package com.flexible.booking.controller;
 
-import com.flexible.booking.dto.request.RegisterUserRequest;
 import com.flexible.booking.model.User;
 import com.flexible.booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public User register(@Valid @RequestBody RegisterUserRequest request) {
-        return userService.register(request);
+    public User register(@Valid @RequestBody User user) {
+        return userService.register(user);
     }
 
     @PatchMapping("/update/{id:\\d+}")

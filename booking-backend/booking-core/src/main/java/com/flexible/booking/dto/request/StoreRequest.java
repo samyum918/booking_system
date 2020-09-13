@@ -10,7 +10,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CreateStoreRequest {
+public class StoreRequest {
+    Integer id;
     @NotBlank
     String name;
     @NotNull

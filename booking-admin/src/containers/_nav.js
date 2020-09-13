@@ -50,6 +50,24 @@ export default [
         to: '/records/cancel-booking',
         icon: 'cil-x-circle'
       },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'User',
+        to: '/records/user',
+        icon: 'cil-user'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Date Blocking',
+        to: '/records/date-blocking',
+        icon: 'cil-calendar'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Timeslot Blocking',
+        to: '/records/timeslot-blocking',
+        icon: 'cil-clock'
+      },
       // {
       //   _name: 'CSidebarNavTitle',
       //   _children: ['Components']

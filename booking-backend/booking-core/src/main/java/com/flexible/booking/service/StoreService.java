@@ -1,7 +1,9 @@
 package com.flexible.booking.service;
 
-import com.flexible.booking.dto.request.CreateStoreRequest;
+import com.flexible.booking.dto.request.StoreRequest;
+import com.flexible.booking.exception.ApiBadRequestException;
 import com.flexible.booking.exception.ApiForbiddenException;
+import com.flexible.booking.exception.ApiResourceNotFoundException;
 import com.flexible.booking.model.Store;
 import com.flexible.booking.model.StoreTimeslot;
 import com.flexible.booking.repository.StoreRepository;
@@ -10,11 +12,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StoreService {
@@ -25,7 +29,7 @@ public class StoreService {
     private StoreTimeslotRepository storeTimeslotRepository;
 
     @Transactional
-    public Store create(CreateStoreRequest request) {
+    public Store create(StoreRequest request) {
         Integer existingRecords = storeRepository.countByName(request.getName());
         if(existingRecords > 0) {
             throw new ApiForbiddenException("Store already exists.");
@@ -88,5 +92,33 @@ public class StoreService {
         storeTimeslotRepository.saveAll(storeTimeslotList);
 
         return store;
+    }
+
+    @Transactional
+    public Store update(StoreRequest request) {
+        if(StringUtils.isEmpty(request.getId())) {
+            throw new ApiBadRequestException("Id cannot be null");
+        }
+
+        Optional<Store> storeOpt = storeRepository.findById(request.getId());
+        if(!storeOpt.isPresent()) {
+            throw new ApiResourceNotFoundException("Store cannot be found.");
+        }
+
+        String[] ignoreProperties = {"workingHourFrom", "workingHourTo", "excludingTimeslots"};
+        Store store = new Store();
+        try {
+            BeanUtils.copyProperties(request, store, ignoreProperties);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to transform store properties.");
+        }
+        //workingHourFrom, workingHourTo
+        LocalTime workingHourFrom = LocalTime.parse(request.getWorkingHourFrom());
+        store.setWorkingHourFrom(workingHourFrom.getHour());
+
+        LocalTime workingHourTo = LocalTime.parse(request.getWorkingHourTo());
+        store.setWorkingHourTo(workingHourTo.getHour());
+
+        return storeRepository.save(store);
     }
 }

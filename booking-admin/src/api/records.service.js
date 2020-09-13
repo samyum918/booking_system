@@ -1,31 +1,19 @@
-import auth from './auth';
-import axios from 'axios';
+import dataService from './data.service';
 
 export default {
     booking() {
-        return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/records/booking",
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.getAll("/records/booking");
     },
     cancelBooking() {
-        return new Promise ((resolve, reject) => {
-            axios.get(process.env.VUE_APP_API_ENDPOINT + "/records/cancel-booking",
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
-    }
+        return dataService.getAll("/records/cancel-booking");
+    },
+    user() {
+        return dataService.getAll("/records/user");
+    },
+    dateBlocking() {
+        return dataService.getAll("/records/date-blocking");
+    },
+    timeslotBlocking() {
+        return dataService.getAll("/records/timeslot-blocking");
+    },
 }

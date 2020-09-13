@@ -1,33 +1,10 @@
-import auth from './auth';
-import axios from 'axios';
+import dataService from './data.service';
 
 export default {
     date(dateObj) {
-        return new Promise ((resolve, reject) => {
-            axios.post(process.env.VUE_APP_API_ENDPOINT + "/block-booking/date",
-            dateObj,
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.post("/block-booking/date", dateObj);
     },
     timeslot(timeslotObj) {
-        return new Promise ((resolve, reject) => {
-            axios.post(process.env.VUE_APP_API_ENDPOINT + "/block-booking/timeslot",
-            timeslotObj,
-            {
-                headers: auth.apiHeader()
-            }).then(resp => {
-                resolve(resp);
-            })
-            .catch(err => {
-                reject(err.response);
-            });
-        });
+        return dataService.post("/block-booking/timeslot", timeslotObj);
     },
 }

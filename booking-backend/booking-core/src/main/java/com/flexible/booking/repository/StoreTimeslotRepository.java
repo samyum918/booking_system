@@ -1,6 +1,7 @@
 package com.flexible.booking.repository;
 
 import com.flexible.booking.dto.StoreTimeslotCount;
+import com.flexible.booking.dto.response.CmsTimeslotsResponse;
 import com.flexible.booking.model.StoreTimeslot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,14 @@ public interface StoreTimeslotRepository extends JpaRepository<StoreTimeslot, In
     @Query("SELECT new com.flexible.booking.dto.StoreTimeslotCount(st.weekday, count(*)) FROM StoreTimeslot st " +
             "WHERE st.storeId = :storeId GROUP BY st.weekday")
     List<StoreTimeslotCount> getStoreTimeslotCountByWeekday(@Param("storeId") Integer storeId);
+
+    @Query("SELECT new com.flexible.booking.dto.response.CmsTimeslotsResponse(" +
+            "st.id, st.storeId, s.name, st.weekday, st.startTime, st.endTime" +
+            ") " +
+            "FROM StoreTimeslot st " +
+            "INNER JOIN Store s ON st.storeId = s.id " +
+            "WHERE s.deleteDate IS NULL")
+    List<CmsTimeslotsResponse> cmsFindAllTimeslots();
 
     List<StoreTimeslot> findByWeekday(DayOfWeek weekday);
 
