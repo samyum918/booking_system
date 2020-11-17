@@ -13,11 +13,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "booking")
 public class Booking extends BaseModel {
-    @Column(name = "store_id", nullable = false)
-    private Integer storeId;
+    @ManyToOne
+    @JoinColumn(name="store_id", nullable = false)
+    private Store store;
 
-    @Column(name = "user_id")
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 
     @Column(name = "reservation_date", nullable = false)
     private LocalDate reservationDate;

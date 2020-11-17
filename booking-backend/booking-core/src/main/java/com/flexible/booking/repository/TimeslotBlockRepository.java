@@ -8,5 +8,5 @@ import java.time.LocalDate;
 
 @Repository
 public interface TimeslotBlockRepository extends JpaRepository<TimeslotBlock, Integer> {
-    Integer countByStoreIdAndDateAndTimeslot(Integer storeId, LocalDate date, String timeslot);
+    Integer countByStore_IdAndDateAndTimeslot(Integer storeId, LocalDate date, String timeslot);
 }

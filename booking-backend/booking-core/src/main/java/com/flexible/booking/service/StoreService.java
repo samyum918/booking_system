@@ -80,7 +80,7 @@ public class StoreService {
             for(LocalTime time = startWorkingTime; time.isBefore(endWorkingTime); time = time.plusMinutes(store.getBookingDurationInMin())) {
                 if(!excludingTimeslots.contains(time.toString())) {
                     StoreTimeslot storeTimeslot = new StoreTimeslot();
-                    storeTimeslot.setStoreId(store.getId());
+                    storeTimeslot.setStore(store);
                     storeTimeslot.setWeekday(weekday);
                     storeTimeslot.setStartTime(time.toString());
                     storeTimeslot.setEndTime(time.plusMinutes(store.getBookingDurationInMin()).toString());

@@ -28,7 +28,7 @@ public class StoreTimeslotController {
 
     @PostMapping("/create")
     public StoreTimeslot create(@Valid @RequestBody StoreTimeslot storeTimeslot) {
-        Integer existingRecords = storeTimeslotRepository.countByStoreIdAndWeekdayAndStartTime(storeTimeslot.getStoreId(),
+        Integer existingRecords = storeTimeslotRepository.countByStoreIdAndWeekdayAndStartTime(storeTimeslot.getStore().getId(),
                                                                         storeTimeslot.getWeekday(), storeTimeslot.getStartTime());
         if(existingRecords > 0) {
             throw new ApiForbiddenException("Store timeslot already exists.");

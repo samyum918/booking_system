@@ -10,11 +10,13 @@ import com.flexible.booking.exception.ApiForbiddenException;
 import com.flexible.booking.exception.ApiResourceNotFoundException;
 import com.flexible.booking.model.Booking;
 import com.flexible.booking.model.CancelBooking;
+import com.flexible.booking.model.Store;
 import com.flexible.booking.model.StoreTimeslot;
 import com.flexible.booking.model.User;
 import com.flexible.booking.model.enums.ReservationRole;
 import com.flexible.booking.repository.BookingRepository;
 import com.flexible.booking.repository.CancelBookingRepository;
+import com.flexible.booking.repository.StoreRepository;
 import com.flexible.booking.repository.StoreTimeslotRepository;
 import com.flexible.booking.repository.UserRepository;
 import com.flexible.booking.utils.ProjectUtils;
@@ -40,6 +42,9 @@ public class BookingService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
 
     @Autowired
     private StoreTimeslotRepository storeTimeslotRepository;
@@ -121,11 +126,11 @@ public class BookingService {
         LocalDate targetDate = LocalDate.parse(date);
         DayOfWeek targetWeekDay = targetDate.getDayOfWeek();
 
-        List<StoreTimeslot> totalTimeslotsObj = storeTimeslotRepository.findByStoreIdAndWeekday(storeId, targetWeekDay);
+        List<StoreTimeslot> totalTimeslotsObj = storeTimeslotRepository.findByStore_IdAndWeekday(storeId, targetWeekDay);
         List<String> availableTimeslots = totalTimeslotsObj.stream().map(t -> t.getStartTime()).collect(Collectors.toList());
 
         if(!CollectionUtils.isEmpty(availableTimeslots)) {
-            List<Booking> reservedTimeslotsObj = bookingRepository.findByStoreIdAndReservationDate(storeId, targetDate);
+            List<Booking> reservedTimeslotsObj = bookingRepository.findByStore_IdAndReservationDate(storeId, targetDate);
             List<String> reservedTimeslots = new ArrayList<>();
 
             if(!CollectionUtils.isEmpty(reservedTimeslotsObj)) {
@@ -142,10 +147,15 @@ public class BookingService {
     }
 
     public Booking reserve(ReservationRequest request) {
-        Optional<Booking> bookingRecords = bookingRepository.findByStoreIdAndReservationDateAndTimeslot(request.getStoreId(),
+        Optional<Booking> bookingRecords = bookingRepository.findByStore_IdAndReservationDateAndTimeslot(request.getStoreId(),
                                                                 request.getReservationDate(), request.getTimeslot());
         if(bookingRecords.isPresent()) {
             throw new ApiForbiddenException("This timeslot has already reserved.");
+        }
+
+        Optional<Store> storeOpt = storeRepository.findById(request.getStoreId());
+        if(!storeOpt.isPresent()) {
+            throw new ApiForbiddenException("Store does not exist.");
         }
 
         Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
@@ -154,7 +164,8 @@ public class BookingService {
         }
 
         Booking booking = ProjectUtils.transformFrom(request, Booking.class);
-        booking.setUserId(userOpt.get().getId());
+        booking.setStore(storeOpt.get());
+        booking.setUser(userOpt.get());
         booking.setWeekday(booking.getReservationDate().getDayOfWeek());
         booking.setReserveBy(ReservationRole.USER);
         return bookingRepository.save(booking);

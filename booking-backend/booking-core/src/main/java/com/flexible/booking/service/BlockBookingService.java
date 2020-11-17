@@ -30,13 +30,13 @@ public class BlockBookingService {
 
     @Transactional
     public TimeslotBlock blockSpecificTimeslot(TimeslotBlock timeslotBlock) {
-        Integer blockingRecords = timeslotBlockRepository.countByStoreIdAndDateAndTimeslot(timeslotBlock.getStoreId(),
+        Integer blockingRecords = timeslotBlockRepository.countByStore_IdAndDateAndTimeslot(timeslotBlock.getStore().getId(),
                                                                         timeslotBlock.getDate(), timeslotBlock.getTimeslot());
         if(blockingRecords > 0) {
             throw new ApiForbiddenException("Blocking record already exists.");
         }
 
-        Optional<Booking> bookingRecordOpt = bookingRepository.findByStoreIdAndReservationDateAndTimeslot(timeslotBlock.getStoreId(),
+        Optional<Booking> bookingRecordOpt = bookingRepository.findByStore_IdAndReservationDateAndTimeslot(timeslotBlock.getStore().getId(),
                                                                             timeslotBlock.getDate(), timeslotBlock.getTimeslot());
         if(bookingRecordOpt.isPresent()) {
             throw new ApiForbiddenException("The timeslot has already reserved by an user. Please cancel the reservation first.");
@@ -46,7 +46,7 @@ public class BlockBookingService {
         timeslotBlockRepository.save(timeslotBlock);
 
         Booking booking = new Booking();
-        booking.setStoreId(timeslotBlock.getStoreId());
+        booking.setStore(timeslotBlock.getStore());
         booking.setReservationDate(timeslotBlock.getDate());
         booking.setTimeslot(timeslotBlock.getTimeslot());
         booking.setWeekday(timeslotBlock.getDate().getDayOfWeek());
@@ -59,7 +59,7 @@ public class BlockBookingService {
 
     @Transactional
     public DateBlock blockSpecificDate(DateBlock dateBlock) {
-        Integer existingRecords = dateBlockRepository.countByStoreIdAndDate(dateBlock.getStoreId(), dateBlock.getDate());
+        Integer existingRecords = dateBlockRepository.countByStoreIdAndDate(dateBlock.getStore().getId(), dateBlock.getDate());
         if(existingRecords > 0) {
             throw new ApiForbiddenException("Record already exists.");
         }
@@ -67,19 +67,19 @@ public class BlockBookingService {
         //save
         dateBlockRepository.save(dateBlock);
 
-        List<StoreTimeslot> timeslotList = storeTimeslotRepository.findByStoreIdAndWeekday(dateBlock.getStoreId(),
+        List<StoreTimeslot> timeslotList = storeTimeslotRepository.findByStore_IdAndWeekday(dateBlock.getStore().getId(),
                                                                                 dateBlock.getDate().getDayOfWeek());
         List<Booking> bookingList = new ArrayList<>();
         if(!CollectionUtils.isEmpty(timeslotList)) {
             for(StoreTimeslot timeslot : timeslotList) {
-                Optional<Booking> bookingRecordOpt = bookingRepository.findByStoreIdAndReservationDateAndTimeslot(dateBlock.getStoreId(),
+                Optional<Booking> bookingRecordOpt = bookingRepository.findByStore_IdAndReservationDateAndTimeslot(dateBlock.getStore().getId(),
                                                                                             dateBlock.getDate(), timeslot.getStartTime());
                 if(bookingRecordOpt.isPresent()) {
                     throw new ApiForbiddenException("A timeslot has already reserved by an user. Please cancel the reservation first.");
                 }
 
                 Booking booking = new Booking();
-                booking.setStoreId(dateBlock.getStoreId());
+                booking.setStore(dateBlock.getStore());
                 booking.setReservationDate(dateBlock.getDate());
                 booking.setTimeslot(timeslot.getStartTime());
                 booking.setWeekday(dateBlock.getDate().getDayOfWeek());

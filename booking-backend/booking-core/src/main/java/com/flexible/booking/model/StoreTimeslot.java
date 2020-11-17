@@ -12,13 +12,14 @@ import java.time.DayOfWeek;
 @Setter
 @Entity
 @Table(
-        name = "store_timeslot",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"store_id", "start_time", "end_time"})}
+    name = "store_timeslot",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"store_id", "start_time", "end_time"})}
 )
 public class StoreTimeslot extends BaseModel {
     @NotNull
-    @Column(name = "store_id")
-    private Integer storeId;
+    @ManyToOne
+    @JoinColumn(name="store_id", nullable = false)
+    private Store store;
 
     @NotNull
     @Enumerated(EnumType.STRING)

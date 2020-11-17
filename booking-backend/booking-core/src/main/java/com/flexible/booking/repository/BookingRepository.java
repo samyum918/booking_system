@@ -13,21 +13,21 @@ import java.util.Optional;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    @Query("SELECT b FROM Booking b WHERE b.storeId = :storeId " +
+    @Query("SELECT b FROM Booking b WHERE b.store.id = :storeId " +
             "AND SUBSTRING(b.reservationDate, 1, 7) = :yearMonth")
     List<Booking> getBookingRecordByMonth(@Param("storeId") Integer storeId,
                                           @Param("yearMonth") String yearMonth);
 
     @Query("SELECT new com.flexible.booking.dto.response.CmsBookingResponse(" +
-            "b.id, b.storeId, s.name, b.userId, u.firstName, u.lastName, u.username, b.reservationDate, b.timeslot" +
+            "b.id, s.id, s.name, u.id, u.firstName, u.lastName, u.username, b.reservationDate, b.timeslot" +
             ") " +
             "FROM Booking b " +
-            "INNER JOIN Store s ON b.storeId = s.id " +
-            "INNER JOIN User u ON b.userId = u.id " +
+            "INNER JOIN Store s ON b.store.id = s.id " +
+            "INNER JOIN User u ON b.user.id = u.id " +
             "ORDER BY b.reservationDate DESC")
     List<CmsBookingResponse> cmsFindAllBooking();
 
-    List<Booking> findByStoreIdAndReservationDate(Integer storeId, LocalDate reservationDate);
+    List<Booking> findByStore_IdAndReservationDate(Integer storeId, LocalDate reservationDate);
 
-    Optional<Booking> findByStoreIdAndReservationDateAndTimeslot(Integer storeId, LocalDate reservationDate, String timeslot);
+    Optional<Booking> findByStore_IdAndReservationDateAndTimeslot(Integer storeId, LocalDate reservationDate, String timeslot);
 }
