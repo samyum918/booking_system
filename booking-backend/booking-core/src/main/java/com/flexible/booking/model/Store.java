@@ -1,5 +1,6 @@
 package com.flexible.booking.model;
 
+import com.flexible.booking.model.base.SoftDeleteBaseModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Where;

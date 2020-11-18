@@ -1,5 +1,6 @@
-package com.flexible.booking.model;
+package com.flexible.booking.model.base;
 
+import com.flexible.booking.model.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

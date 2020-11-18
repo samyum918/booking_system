@@ -1,7 +1,7 @@
 package com.flexible.booking.repository;
 
 import com.flexible.booking.exception.ApiResourceNotFoundException;
-import com.flexible.booking.model.SoftDeleteBaseModel;
+import com.flexible.booking.model.base.SoftDeleteBaseModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.util.Assert;
