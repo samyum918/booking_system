@@ -56,5 +56,32 @@ export default {
                 reject(err.response);
             });
         });
+    },
+    cancel(bookingId) {
+        return new Promise ((resolve, reject) => {
+            axios.delete(process.env.VUE_APP_API_ENDPOINT + "/booking/cancel/" + bookingId, 
+            {
+                headers: auth.apiHeader()
+            }).then(resp => {
+                resolve(resp);
+            })
+            .catch(err => {
+                reject(err.response);
+            });
+        });
+    },
+    getBookingHistory(userObj) {
+        return new Promise ((resolve, reject) => {
+            axios.post(process.env.VUE_APP_API_ENDPOINT + "/booking/booking-history", 
+            userObj,
+            {
+                headers: auth.apiHeader()
+            }).then(resp => {
+                resolve(resp);
+            })
+            .catch(err => {
+                reject(err.response);
+            });
+        });
     }
 }

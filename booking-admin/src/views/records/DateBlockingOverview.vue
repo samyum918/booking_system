@@ -29,7 +29,7 @@ export default {
     data() {
         return {
             items: [],
-            fields: ['id', 'storeId', 'date'],
+            fields: ['id', 'storeName', 'date'],
             loading: false,
             pagination: {dots: false},
         }
@@ -39,7 +39,11 @@ export default {
             this.loading = true;
 
             recordsService.dateBlocking().then(result => {
-                this.items = result.data;
+                this.items = result.data.map(d => ({
+                  "id": d.id, 
+                  "storeName": d.store.name, 
+                  "date": d.date
+                }));
                 this.loading = false;
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },

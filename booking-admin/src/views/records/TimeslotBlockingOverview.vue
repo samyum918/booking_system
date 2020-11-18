@@ -29,7 +29,7 @@ export default {
     data() {
         return {
             items: [],
-            fields: ['id', 'storeId', 'date', 'timeslot'],
+            fields: ['id', 'storeName', 'date', 'timeslot'],
             loading: false,
             pagination: {dots: false},
         }
@@ -39,7 +39,12 @@ export default {
             this.loading = true;
 
             recordsService.timeslotBlocking().then(result => {
-                this.items = result.data;
+                this.items = result.data.map(d => ({
+                  "id": d.id, 
+                  "storeName": d.store.name, 
+                  "date": d.date,
+                  "timeslot": d.timeslot
+                }));;
                 this.loading = false;
             }).catch(err => helper.apiErrorHandling(err, this.$router));
         },

@@ -31,6 +31,11 @@ Vue.use(VueRouter)
     component: () => import('../components/Booking.vue')
   },
   {
+    path: '/booking-history',
+    name: 'booking-history',
+    component: () => import('../components/BookingHistory.vue')
+  },
+  {
     path: '/thankyou',
     name: 'thankyou',
     component: () => import('../components/Thankyou.vue')

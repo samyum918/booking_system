@@ -27,6 +27,8 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             "ORDER BY b.reservationDate DESC")
     List<CmsBookingResponse> cmsFindAllBooking();
 
+    List<Booking> findByUser_IdOrderByReservationDateDescTimeslotDesc(Integer userId);
+
     List<Booking> findByStore_IdAndReservationDate(Integer storeId, LocalDate reservationDate);
 
     Optional<Booking> findByStore_IdAndReservationDateAndTimeslot(Integer storeId, LocalDate reservationDate, String timeslot);

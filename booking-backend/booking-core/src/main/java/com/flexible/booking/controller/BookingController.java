@@ -2,10 +2,12 @@ package com.flexible.booking.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.flexible.booking.dto.request.BookingHistoryRequest;
 import com.flexible.booking.dto.request.ReservationRequest;
 import com.flexible.booking.dto.response.AvailableDatesResponse;
 import com.flexible.booking.dto.response.AvailableStoresResponse;
 import com.flexible.booking.dto.response.AvailableTimeslotsResponse;
+import com.flexible.booking.dto.response.BookingHistoryResponse;
 import com.flexible.booking.model.Booking;
 import com.flexible.booking.model.Store;
 import com.flexible.booking.repository.StoreRepository;
@@ -59,5 +61,10 @@ public class BookingController {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("status", "SUCCESS");
         return objectNode;
+    }
+
+    @PostMapping("/booking-history")
+    public List<BookingHistoryResponse> bookingHistory(@Valid @RequestBody BookingHistoryRequest request) {
+        return bookingService.getBookingHistory(request.getUsername());
     }
 }

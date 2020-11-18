@@ -6,6 +6,7 @@ import com.flexible.booking.dto.enums.AvailabilityLevel;
 import com.flexible.booking.dto.request.ReservationRequest;
 import com.flexible.booking.dto.response.AvailableDatesResponse;
 import com.flexible.booking.dto.response.AvailableTimeslotsResponse;
+import com.flexible.booking.dto.response.BookingHistoryResponse;
 import com.flexible.booking.exception.ApiForbiddenException;
 import com.flexible.booking.exception.ApiResourceNotFoundException;
 import com.flexible.booking.model.Booking;
@@ -20,6 +21,7 @@ import com.flexible.booking.repository.StoreRepository;
 import com.flexible.booking.repository.StoreTimeslotRepository;
 import com.flexible.booking.repository.UserRepository;
 import com.flexible.booking.utils.ProjectUtils;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -182,5 +184,23 @@ public class BookingService {
         cancelBooking.setId(null);
         cancelBookingRepository.save(cancelBooking);
         bookingRepository.delete(bookingRecord);
+    }
+
+    public List<BookingHistoryResponse> getBookingHistory(String username) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if(!userOpt.isPresent()) {
+            throw new ApiForbiddenException("User does not exist.");
+        }
+
+        List<Booking> bookingList = bookingRepository.findByUser_IdOrderByReservationDateDescTimeslotDesc(userOpt.get().getId());
+        return bookingList.stream().map(
+                b -> BookingHistoryResponse.builder()
+                .bookingId(b.getId())
+                .storeName(b.getStore().getName())
+                .reservationDate(b.getReservationDate())
+                .timeslot(b.getTimeslot())
+                .canCancel(LocalDate.now().compareTo(b.getReservationDate()) < 0)
+                .build()
+        ).collect(Collectors.toList());
     }
 }

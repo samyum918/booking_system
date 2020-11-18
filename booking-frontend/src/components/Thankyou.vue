@@ -7,6 +7,11 @@
                     Continue booking
                 </button>
             </a>
+            <a href="/booking-history" style="text-decoration: none;">
+                <button type="button" class="btn btn-dark btn-lg btn-block btn-margin">
+                    View booking history
+                </button>
+            </a>
             <a href="/" style="text-decoration: none;">
                 <button type="button" class="btn btn-dark btn-lg btn-block btn-margin">
                     Back to main page
