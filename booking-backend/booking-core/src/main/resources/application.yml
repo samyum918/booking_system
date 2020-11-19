@@ -9,7 +9,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true
   h2:
     console:
       enabled: false

@@ -192,7 +192,7 @@ public class BookingService {
             throw new ApiForbiddenException("User does not exist.");
         }
 
-        List<Booking> bookingList = bookingRepository.findByUser_IdOrderByReservationDateDescTimeslotDesc(userOpt.get().getId());
+        List<Booking> bookingList = bookingRepository.findBookingHistoryByUser(userOpt.get().getId());
         return bookingList.stream().map(
                 b -> BookingHistoryResponse.builder()
                 .bookingId(b.getId())
