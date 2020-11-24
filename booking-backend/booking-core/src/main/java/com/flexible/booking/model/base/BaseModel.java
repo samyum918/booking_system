@@ -17,6 +17,10 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Version
+    @Column(name = "version")
+    private Integer version;
+
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
