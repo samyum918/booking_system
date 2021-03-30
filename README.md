@@ -1,5 +1,8 @@
 # Reservation System
 
+### Security Flow:
+- Login -> Backend verify login credential and return JWT to front-end -> Front-end use JWT to call API
+
 ### Problem encounted and technical decision:  
 - Problem: Cannot send Cross-Origin request to API
 - Solved: Add CORS config in Spring Security  
